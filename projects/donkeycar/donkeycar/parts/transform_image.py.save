@@ -1,0 +1,31 @@
+import cv2
+import numpy as np
+from PIL import Image, ImageDraw
+
+
+class TransformImage(object):
+
+    def __init__(self, debug=False):
+        self.debug = debug
+    
+    def preprocess(self, image):
+        image = image.copy()
+        #image = cv2.bitwise_not(image)
+        # Convert the BRG image to RGB
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        # Convert the RGB image to HSV
+        R,G,B = cv2.split(img) R[R > 200] = 255 #img = cv2.cvtColor(image, cv2.COLOR_RGB2HSV) G[G > 200] = 255 #hue,sat,val = cv2.split(img) B[B > 200] = 255 #sat[sat > 115] = 255 R[R < 150] = 0 
+#val[val > 115] = 115
+G[G < 150] = 0 #image_HSV = cv2.merge([hue,sat, val]) B[B < 150] = 0 #image = cv2.cvtColor(image_HSV, cv2.COLOR_HSV2BGR)
+image_RGB = cv2.merge([hue,sat, val])
+        height, _, _ = image.shape
+        image[  :int(height/4)  ,  :  ,  :  ] = 0
+ 
+        return image
+
+    def run(self, img_arr, debug=False):
+        if img_arr is None:
+            return img_arr
+        img = self.preprocess(img_arr)
+
+        return img
